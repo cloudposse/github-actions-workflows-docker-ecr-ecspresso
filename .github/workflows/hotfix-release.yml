@@ -23,15 +23,12 @@ name: |-
         with:
           organization: "$\{\{ github.event.repository.owner.login \}\}"
           repository: "$\{\{ github.event.repository.name \}\}"
-          spacelift-organization: "$\{\{ github.event.repository.owner.login \}\}"
         secrets:
           github-private-actions-pat: "$\{\{ secrets.PUBLIC_REPO_ACCESS_TOKEN \}\}"
           registry: "$\{\{ secrets.ECR_REGISTRY \}\}"
           secret-outputs-passphrase: "$\{\{ secrets.GHA_SECRET_OUTPUT_PASSPHRASE \}\}"
           ecr-region: "$\{\{ secrets.ECR_REGION \}\}"
           ecr-iam-role: "$\{\{ secrets.ECR_IAM_ROLE \}\}"
-          spacelift-api-key-id: $\{\{ secrets.SPACELIFT_API_KEY_ID \}\}
-          spacelift-api-key-secret: $\{\{ secrets.SPACELIFT_API_KEY_SECRET \}\}
   ```
 
 on:
@@ -52,10 +49,6 @@ on:
         required: false
         type: string
         default: main
-      spacelift-organization:
-        description: "Spacelift organization name"
-        type: string
-        required: true
     secrets:
       secret-outputs-passphrase:
         description: "Passphrase to encrypt/decrypt secret outputs with gpg. For more information [read](https://github.com/cloudposse/github-action-secret-outputs)"
@@ -71,12 +64,6 @@ on:
         required: true
       ecr-iam-role:
         description: "IAM Role ARN provide ECR write/read access"
-        required: true
-      spacelift-api-key-id:
-        description: "Spacelift API Key ID"
-        required: true
-      spacelift-api-key-secret:
-        description: "Spacelift API Key Secret"
         required: true
 
 permissions:
@@ -127,12 +114,9 @@ jobs:
       tag: ${{ needs.promote.outputs.tag }}
       repository: ${{ inputs.repository }}
       environment: production
-      spacelift-organization: ${{ inputs.spacelift-organization }}
     secrets:
       secret-outputs-passphrase: ${{ secrets.secret-outputs-passphrase }}
       github-private-actions-pat: ${{ secrets.github-private-actions-pat }}
-      spacelift-api-key-id: "${{ secrets.spacelift-api-key-id }}"
-      spacelift-api-key-secret: "${{ secrets.spacelift-api-key-secret }}"
 
   reintegrate:
     uses: cloudposse/github-action-workflows/.github/workflows/controller-hotfix-reintegrate.yml@main
