@@ -120,7 +120,7 @@ jobs:
 
   cd:
     name: cd / production
-    uses: cloudposse/github-actions-workflows/.github/workflows/cd-ecs.yml@main
+    uses: cloudposse/github-actions-workflows/.github/workflows/cd-ecspresso.yml@main
     needs: [ promote ]
     with:
       image: ${{ needs.promote.outputs.image }}
