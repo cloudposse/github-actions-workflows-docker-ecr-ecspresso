@@ -28,7 +28,7 @@ name: |-
           repository: "$\{\{ github.event.repository.name \}\}"
           open: $\{\{ github.event.pull_request.state == 'open' \}\}
           labels: $\{\{ toJSON(github.event.pull_request.labels.*.name) \}\}
-          ref: $\{\{ github.event.pull_request.head.ref  \}\}
+          ref: $\{\{ github.event.pull_request.head.ref \}\}
         secrets:
           github-private-actions-pat: "$\{\{ secrets.PUBLIC_REPO_ACCESS_TOKEN \}\}"
           registry: "$\{\{ secrets.ECR_REGISTRY \}\}"
