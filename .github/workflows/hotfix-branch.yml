@@ -65,6 +65,16 @@ on:
         required: false
         default: ${{ toJSON(github.event.pull_request.labels.*.name) }}
         type: string
+      enable-migration:
+        description: "Run DB migration"
+        type: boolean
+        required: false
+        default: false
+      support-rollback:
+        description: "Perform rollback on failure"
+        type: boolean
+        required: false
+        default: false
     secrets:
       secret-outputs-passphrase:
         description: "Passphrase to encrypt/decrypt secret outputs with gpg. For more information [read](https://github.com/cloudposse/github-action-secret-outputs)"
@@ -115,6 +125,8 @@ jobs:
       open: ${{ inputs.open }}
       labels: ${{ inputs.labels }}
       ref: ${{ inputs.ref }}
+      enable-migration: ${{ inputs.enable-migration }}
+      support-rollback: ${{ inputs.support-rollback }}
       exclusive: true
       env-label: |
         hotfix: deploy
